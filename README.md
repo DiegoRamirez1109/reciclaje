@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import os,random
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -15,6 +16,11 @@ async def on_ready():
 async def hola (ctx):
     await ctx.send("¡Hola! soy tu bot para ayudarte a reducir la contaminacion")
 
+
+@bot.command()
+async def quieneres (ctx):
+    await ctx.send("Soy un bot que quiere ayudarte para que aprendas sobre el tema de la contamincaion, que por cierto La contaminación es la alteración del medio ambiente causada por la introducción de sustancias o elementos dañinos que afectan la naturaleza, los seres vivos y la calidad de vida")
+
 @bot.command()
 async def clasificar(ctx, residuo: str):
     residuo = residuo.lower()
@@ -26,6 +32,15 @@ async def clasificar(ctx, residuo: str):
         await ctx.send(f"El{residuo} va al contenedor NEGRO para ayudar al reciclaje")
     else:
         await ctx.send(f"No tengo informacion para el residuo: {residuo}")
+
+@bot.command()
+async def contaminacion(ctx):
+    img_name = random.choice(os.listdir("images"))
+    with open(f"images/{img_name}" , "rb") as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+
 
 @bot.command()
 async def manualidadreciclable(ctx):
@@ -53,6 +68,6 @@ async def manualidadreciclable(ctx):
     "Cojines con retazos de ropa",
     "Pulseras o cintillos con tiras de tela"
 ]
-    await ctx.send(random.choice(manualidadreciclable))
+await ctx.send(random.choice(manualidadreciclable))
 
 bot.run("")
